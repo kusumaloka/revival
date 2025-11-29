@@ -11,7 +11,12 @@
     - Kunci Publik GPG: `F1F60517602888C8D5E486EB8AD7D4A302EE6771`
     - Kunci Publik SSH: `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICY8uH+xQgBBBJflVyZP+eMOFDCvRhG8R7IXno+hpFbU atqamz@gmail.com`
     - Kota: Surabaya
-3. Firmansyah Dzakwan Arifien <fdzak01@gmail.com> (Dzakwan)
+3. Lucky Mahendra Purba <luckymahendra080503@gmail.com> (Lucky)
+   - Telegram: luckymp
+   - Kunci Publik GPG: `49B36F6B84BFA2CA15C59E405B61512AE4ABAEBF`
+   - Kunci Publik SSH: `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOC5BcMaChF1+cU/nQ9nQ4esZjg/u3cVpQ7MwS41eoE5 janspurba64@gmail.com`
+   - Kota: Surabaya
+4. Firmansyah Dzakwan Arifien <fdzak01@gmail.com> (Dzakwan)
     - Telegram: fdzak01
     - Kunci Publik GPG: `65C4F8CCA44402DDCE9EB9985F3D6D9F31A402B6`
     - Kunci Publik SSH: `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHNEXiJMxT7AOrPtcgfeDXa0LPwKfzGAbamdUXaLslup fdzak01@gmail.com`
