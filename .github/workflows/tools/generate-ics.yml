@@ -1,0 +1,108 @@
+name: Generate ICS Links
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  generate-links:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'meeting') || contains(github.event.issue.labels.*.name, 'workshop')
+    steps:
+      - name: Generate Calendar Links
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.issue.body;
+            
+            // Helper function to extract values using regex
+            function extractValue(regex) {
+              const match = body.match(regex);
+              return match ? match[1].trim() : null;
+            }
+
+            const title = extractValue(/### Judul Materi\s*\n\s*(.*)/);
+            const description = extractValue(/### Deskripsi\s*\n\s*([\s\S]*?)(?=\n###|$)/) || "";
+            const dateStr = extractValue(/### Tanggal\s*\n\s*(.*)/);
+            const timeStr = extractValue(/### Jam Mulai \(WIB\)\s*\n\s*(.*)/);
+            const durationStr = extractValue(/### Durasi\s*\n\s*(.*)/);
+
+            if (!title || !dateStr || !timeStr || !durationStr) {
+              console.log("Required fields missing in issue body.");
+              return;
+            }
+
+            // Parse Date (DD-MM-YYYY)
+            const dateParts = dateStr.split('-');
+            if (dateParts.length !== 3) {
+              console.log("Invalid date format.");
+              return;
+            }
+            const day = parseInt(dateParts[0], 10);
+            const month = parseInt(dateParts[1], 10) - 1; // 0-indexed
+            const year = parseInt(dateParts[2], 10);
+
+            // Parse Time (HH:mm)
+            const timeParts = timeStr.split(':');
+            const hour = parseInt(timeParts[0], 10);
+            const minute = parseInt(timeParts[1], 10);
+
+            // Convert WIB (UTC+7) to UTC
+            // We construct the date in UTC by subtracting 7 hours from the WIB time
+            const startTimestamp = Date.UTC(year, month, day, hour - 7, minute);
+            const startDate = new Date(startTimestamp);
+
+            // Calculate Duration
+            let durationMinutes = 60;
+            if (durationStr.includes("1.5")) durationMinutes = 90;
+            if (durationStr.includes("2")) durationMinutes = 120;
+
+            const endTimestamp = startTimestamp + (durationMinutes * 60 * 1000);
+            const endDate = new Date(endTimestamp);
+
+            // Format for Google Calendar (YYYYMMDDThhmmssZ)
+            function formatGoogleDate(date) {
+              return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+            }
+
+            const startISO = formatGoogleDate(startDate);
+            const endISO = formatGoogleDate(endDate);
+            const location = "https://meet.google.com/hqb-fymu-dgu";
+
+            // Generate Google Calendar Link
+            const googleUrl = new URL("https://calendar.google.com/calendar/render");
+            googleUrl.searchParams.append("action", "TEMPLATE");
+            googleUrl.searchParams.append("text", title);
+            googleUrl.searchParams.append("details", description);
+            googleUrl.searchParams.append("location", location);
+            googleUrl.searchParams.append("dates", `${startISO}/${endISO}`);
+
+            // Generate Agical.io Link
+            // Using standard params: subject, description, location, dtstart, dtend
+            const agicalUrl = new URL("https://agical.io/");
+            agicalUrl.searchParams.append("format", "ics");
+            agicalUrl.searchParams.append("subject", title);
+            agicalUrl.searchParams.append("description", description);
+            agicalUrl.searchParams.append("location", location);
+            agicalUrl.searchParams.append("dtstart", startDate.toISOString());
+            agicalUrl.searchParams.append("dtend", endDate.toISOString());
+
+            const commentBody = `### 📅 Calendar Links Generated
+
+            | Service | Link |
+            | :--- | :--- |
+            | **Google Calendar** | [Add to Google Calendar](${googleUrl.toString()}) |
+            | **ICS File** | [Download .ics](${agicalUrl.toString()}) |
+
+            **Event Details:**
+            - **Topic:** ${title}
+            - **Time:** ${dateStr} at ${timeStr} WIB
+            - **Location:** ${location}
+            `;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: commentBody
+            });
