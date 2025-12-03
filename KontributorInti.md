@@ -23,6 +23,11 @@
     - Kunci Publik GPG: `49B36F6B84BFA2CA15C59E405B61512AE4ABAEBF`
     - Kunci Publik SSH: `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOC5BcMaChF1+cU/nQ9nQ4esZjg/u3cVpQ7MwS41eoE5 janspurba64@gmail.com`
     - Kota: Surabaya
+- Raffi Febriandika Utama <raffifu@protonmail.com> (Raffi)
+    - Telegram: luckymp
+    - Kunci Publik GPG: `9D49D68F7A3E36893C188ADF519A3CA248585B76`
+    - Kunci Publik SSH: `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ37SITWqtOptfdAO1aNaDsvqPiA3S9qqzm2vJpAXKwU raffifu`
+    - Kota: Surabaya
 
 ## Riset dan Pengembangan
 - Atqa Munzir Zakaria <atqamz@gmail.com> (Atqa)
@@ -40,4 +45,8 @@
     - Kunci Publik GPG: `D7C8687CA30BF7C07A776473C55FF431E2978972`
     - Kunci Publik SSH: `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF3CK6yO53fE/Cc5116jrf/sAw8c37+3Ikvt2frFEb8G fathur.fathur7@gmail.com`
     - Kota: Bandung
-
+- Atikha Azmila <atikhaoffice@gmail.com> (Atikha)
+    - Telegram: atikha_z
+    - Kunci Publik GPG: `FCECBE42C321F6F5B20065335306F7E6F57CF7D1`
+    - Kunci Publik SSH: `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1h8JHk2YrDmlXQqp9PoPLIKgZuLKXX5Z2JXAArce1a atikhaoffice@gmail.com`
+    - Kota: Jakarta
